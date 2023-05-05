@@ -1,0 +1,9 @@
+fsspec
+gcsfs
+torch
+pytorch-lightning
+omegaconf
+kornia
+wandb
+segmentation_models_pytorch
+hydra-core
