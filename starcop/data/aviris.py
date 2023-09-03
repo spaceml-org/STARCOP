@@ -139,7 +139,12 @@ def radiance_to_reflectance(data:GeoTensor, solar_irradiance:Union[List[float], 
     # Get latitude and longitude of the center of image to compute the solar angle
     center_coords = data.transform * (data.shape[-1] // 2, data.shape[-2] // 2)
     constant_factor = observation_date_correction_factor(center_coords, date_of_acquisition, crs_coords=data.crs)
-    data_toa = data.values / 100 * constant_factor / solar_irradiance
+
+    # µW /(nm cm² sr) to W/(nm m² sr)
+    radiances = data.values * (10**(-6) / 1) * (1 /10**(-4))
+
+    # data_toa = data.values / 100 * constant_factor / solar_irradiance
+    data_toa = radiances * constant_factor / solar_irradiance
     mask = data == data.fill_value_default
     data_toa[mask] = data.fill_value_default
 
@@ -147,7 +152,7 @@ def radiance_to_reflectance(data:GeoTensor, solar_irradiance:Union[List[float], 
                      fill_value_default=data.fill_value_default)
 
 
-def load_srf_s2(cache:bool=True) -> pd.DataFrame:
+def load_srf_s2(cache:bool=True, path_override=None, drop_by_minimum = False) -> pd.DataFrame:
     """
     Loads spectral response function of Sentinel-2.
     This was obtained [here](https://sentinels.copernicus.eu/web/sentinel/user-guides/document-library/-/asset_publisher/xlslt4309D5h/content/sentinel-2a-spectral-responses;jsessionid=6D1029B0794C21DEEBA960ACFA22EB1A.jvm2?redirect=https%3A%2F%2Fsentinels.copernicus.eu%2Fweb%2Fsentinel%2Fuser-guides%2Fdocument-library%3Bjsessionid%3D6D1029B0794C21DEEBA960ACFA22EB1A.jvm2%3Fp_p_id%3D101_INSTANCE_xlslt4309D5h%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_count%3D1).
@@ -164,12 +169,20 @@ def load_srf_s2(cache:bool=True) -> pd.DataFrame:
         if SRF_S2 is not None:
             return SRF_S2
 
-    srf_s2 = pd.read_csv(SRF_S2_FILE)
+    use_path = SRF_S2_FILE
+    if path_override is not None:
+        use_path = path_override
+
+    srf_s2 = pd.read_csv(use_path)
     srf_s2 = srf_s2.set_index("SR_WL")
 
     # remove rows with all values zero
     any_not_cero = np.any((srf_s2 > 1e-6).values, axis=1)
     srf_s2 = srf_s2.loc[any_not_cero]
+
+    if drop_by_minimum:
+        # also drop bands to the minimal band we actually have
+        srf_s2 = srf_s2.drop(list(range(411, drop_by_minimum)))
 
     if cache:
         SRF_S2 = srf_s2
@@ -177,7 +190,7 @@ def load_srf_s2(cache:bool=True) -> pd.DataFrame:
     return srf_s2
 
 
-def load_srf_wv3(cache:bool=True) -> pd.DataFrame:
+def load_srf_wv3(cache:bool=True, path_override=None) -> pd.DataFrame:
     """
     Loads spectral response function of SWIR bands of WorldView-3
 
@@ -193,7 +206,11 @@ def load_srf_wv3(cache:bool=True) -> pd.DataFrame:
         if SRF_WV3 is not None:
             return SRF_WV3
 
-    srf_wv3 = pd.read_csv(SRF_WV3_FILE)
+    use_path = SRF_WV3_FILE
+    if path_override is not None:
+        use_path = path_override
+
+    srf_wv3 = pd.read_csv(use_path)
     srf_wv3 = srf_wv3.set_index("SR_WL")
 
     # remove rows with all values zero
@@ -262,6 +279,11 @@ def transform_to_srf(aviris:GeoData, bands:List[str],
     bands_index_aviris = np.arange(0, len(bands_nanometers_aviris))
     interp = interpolate.interp1d(bands_nanometers_aviris, bands_index_aviris, kind="nearest")
     y_nearest = interp(srf.index).astype(int)
+    # if verbose:
+    #     print("y_nearest", y_nearest)
+    #     print("bands_nanometers_aviris", bands_nanometers_aviris)
+    #     print("bands_index_aviris", bands_index_aviris)
+    #     print("srf.index", srf.index)
     table_aviris_as_sr_s2 = pd.DataFrame({"SR_WL": srf.index, "AVIRIS_band": y_nearest})
     table_aviris_as_sr_s2 = table_aviris_as_sr_s2.set_index("SR_WL")
 
@@ -290,6 +312,7 @@ def transform_to_srf(aviris:GeoData, bands:List[str],
         # Load aviris bands
         if verbose:
             print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t Loading {len(weight_per_aviris_band.index)} bands")
+            # print("these ones:", weight_per_aviris_band.index)
         aviris_s2_band_i = aviris.isel({"band": weight_per_aviris_band.index}).load()
         if verbose:
             print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\t bands loaded, computing tensor")
