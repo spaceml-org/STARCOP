@@ -61,6 +61,20 @@ pip install -r requirements.txt
 
 To start using our model for inference, you can check the demo with AVIRIS data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb"> Colab Inference on AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>, or with EMIT data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_EMIT.ipynb"> Colab Inference on EMIT <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>. These download our annotated datasets and demonstrate the performance of our pre-trained models.
 
+<table>
+<tr>
+  <td width="100%"><img src="_illustrations/Figure1_EMIT.jpg" alt="Detections in EMIT" width="100%"><br>
+  Selected predictions of our model detecting methane leaks using the data from the EMIT sensor deployed on board of the International Space Station. Showing detections from around the world with data from 2022-2023. Image credit: Open source EMIT data (NASA) processed by Vít Růžička.
+  </td>
+</tr>
+<tr>
+  <td width="100%"><img src="_illustrations/Figure2_AVIRIS.jpg" alt="Detections in AVIRIS" width="100%"><br>
+  Selected predictions of our model detecting methane leaks using the data from the AVIRIS aerial mission flown above the Four Corners area in the USA in 2019. Plume emission rates are used from the source annotations. Image credit: Open source AVIRIS data (NASA) processed by Vít Růžička.
+  </td>
+</tr>
+</table>
+
+
 **Training**
 
 To reproduce the same training process as reported in the paper, you will need to download the whole STARCOP dataset from Zenodo first, and prepare the coding environment.
