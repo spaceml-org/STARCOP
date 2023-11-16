@@ -46,15 +46,14 @@ For dataset inspection use the prepared <a href="https://colab.research.google.c
 ```bash
 git clone git@github.com:spaceml-org/STARCOP.git
 
-# This will create a starcop conda environment:
-conda create -c conda-forge -n starcop python=3 ipython rasterio geopandas ipykernel matplotlib scikit-image mamba --y
-source activate starcop
-
-# Install georeader from: https://github.com/spaceml-org/georeader
-pip install git+https://github.com/spaceml-org/georeader.git
+conda create -c conda-forge -n starcop_env python=3.10 mamba
+conda activate starcop_env
 
 cd STARCOP
 pip install -r requirements.txt
+
+# Install georeader from: https://github.com/spaceml-org/georeader
+pip install git+https://github.com/spaceml-org/georeader.git
 ```
 
 **Inference**
@@ -85,6 +84,19 @@ To reproduce the same training process as reported in the paper, you will need t
 
 # Or run the prepared training script used for the paper models (remember to download and adjust the paths to the training datasets)
 ./bash/bash_train_example.sh
+```
+
+**Minimal training example**
+
+If you install the environment using the commands above, this should work as a minimal training example (which includes first getting the data):
+
+```bash
+gdown https://drive.google.com/uc?id=1Qw96Drmk2jzBYSED0YPEUyuc2DnBechl -O STARCOP_mini.zip
+unzip -q STARCOP_mini.zip
+# The train script will expect the test dataset in the "test.csv" - so here in this small demo we just place the small subset there instead:
+cp STARCOP_mini/test_mini10.csv STARCOP_mini/test.csv
+
+python -m scripts.train dataset.input_products=["mag1c","TOA_AVIRIS_640nm","TOA_AVIRIS_550nm","TOA_AVIRIS_460nm"] model.model_type='unet_semseg' model.pos_weight=1 experiment_name="HyperSTARCOP_magic_rgb_DEMO" dataloader.num_workers=4 dataset.use_weight_loss=True training.val_check_interval=0.5 training.max_epochs=5 products_plot=["rgb_aviris","mag1c","label","pred","differences"] dataset.weight_sampling=True dataset.train_csv="train_mini10.csv" dataset.root_folder=PATH_TO/STARCOP_mini wandb.wandb_entity="YOUR_ENTITY" wandb.wandb_project="starcop_project"
 ```
 
 ## Citation
