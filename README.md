@@ -17,12 +17,15 @@
 </p>
 
 <p align="center">
-  <a href="https://doi.org/10.1038/s41598-023-44918-6">Nature Scientific Reports Paper 2023</a> •
+  <a href="https://www.nature.com/articles/s41598-023-44918-6">Nature Scientific Reports Paper 2023</a> •
+  <a href="https://www.cs.ox.ac.uk/news/2218-full.html">Oxford Department of Computer Science news</a>
+</p>
+
+<p align="center">
   <a href="https://events.ecmwf.int/event/304/contributions/3628/attachments/2152/3811/ECMWf-ESA-ML_Ruzicka.pdf">presentation </a> and
   <a href="https://vimeo.com/771105606/c1cddccabb">video</a> from ECMWF–ESA workshop 2022 •
   <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb">Quick Colab Demo with AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>
 </p>
-
 
 ---
 
@@ -101,5 +104,19 @@ python -m scripts.train dataset.input_products=["mag1c","TOA_AVIRIS_640nm","TOA_
 
 ## Citation
 If you find the STARCOP models or dataset useful in your research, please consider citing our work. 
-In the meanwhile, you can refer to the presentation from the 14-17 November during the ECMWF–ESA workshop 2022 (links above).
 
+```
+@article{ruzicka_starcop_2023,
+	title = {Semantic segmentation of methane plumes with hyperspectral machine learning models},
+	volume = {13},
+	issn = {2045-2322},
+	url = {https://www.nature.com/articles/s41598-023-44918-6},
+	doi = {10.1038/s41598-023-44918-6},
+	number = {1},
+	journal = {Scientific Reports},
+	author = {Růžička, Vít and Mateo-Garcia, Gonzalo and Gómez-Chova, Luis and Vaughan, Anna, and Guanter, Luis and Markham, Andrew},
+	month = nov,
+	year = {2023},
+	pages = {19999},
+}
+```
