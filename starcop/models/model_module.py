@@ -59,8 +59,8 @@ class ModelModule(pl.LightningModule):
 
         # Configure metrics based on settings_model.model_mode: "segmentation_output" # regression_output
         if self.settings_model.model_mode == "segmentation_output":
-            self.confusion_matrix = torchmetrics.ConfusionMatrix(num_classes=2)
-            self.classification_confusion_matrix = torchmetrics.ConfusionMatrix(num_classes=2)
+            self.confusion_matrix = torchmetrics.ConfusionMatrix(num_classes=2, task="binary")
+            self.classification_confusion_matrix = torchmetrics.ConfusionMatrix(num_classes=2, task="binary")
 
 
         elif self.settings_model.model_mode == "regression_output":
