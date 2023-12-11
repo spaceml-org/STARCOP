@@ -47,21 +47,15 @@ For dataset inspection use the prepared <a href="https://colab.research.google.c
 **Install**
 
 ```bash
-git clone git@github.com:spaceml-org/STARCOP.git
-
 conda create -c conda-forge -n starcop_env python=3.10 mamba
 conda activate starcop_env
 
-cd STARCOP
-pip install -r requirements.txt
-
-# Install georeader from: https://github.com/spaceml-org/georeader
-pip install git+https://github.com/spaceml-org/georeader.git
+pip install git+https://github.com/spaceml-org/STARCOP.git
 ```
 
 **Inference**
 
-To start using our model for inference, you can check the demo with AVIRIS data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb"> Colab Inference on AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>, or with EMIT data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_EMIT.ipynb"> Colab Inference on EMIT <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>. These download our annotated datasets and demonstrate the performance of our pre-trained models.
+To start using our model for inference, you can check the demo with AVIRIS data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb"> Colab Inference on AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>, or with EMIT data in <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/inference_on_raw_EMIT_nc_file.ipynb"> Colab Inference on EMIT <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>. These download our annotated datasets and demonstrate the performance of our pre-trained models.
 
 <table>
 <tr>
@@ -76,6 +70,7 @@ To start using our model for inference, you can check the demo with AVIRIS data 
 </tr>
 </table>
 
+Our trained models are stored in Hugging Face🤗 at [isp-uv-es/starcop](https://huggingface.co/isp-uv-es/starcop).
 
 **Training**
 
