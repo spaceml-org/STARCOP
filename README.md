@@ -24,7 +24,8 @@
 <p align="center">
   <a href="https://events.ecmwf.int/event/304/contributions/3628/attachments/2152/3811/ECMWf-ESA-ML_Ruzicka.pdf">presentation </a> and
   <a href="https://vimeo.com/771105606/c1cddccabb">video</a> from ECMWF–ESA workshop 2022 •
-  <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb">Quick Colab Demo with AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>
+  <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/model_demos_AVIRIS.ipynb">Quick Demo with AVIRIS <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a> •
+  <a href="https://huggingface.co/isp-uv-es/starcop"> Trained models🤗 </a>
 </p>
 
 ---
