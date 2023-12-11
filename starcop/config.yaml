@@ -1,0 +1,75 @@
+experiment_name: "starcop_run"
+seed: None # Pytorch Lightning global seed, for reproducibility
+
+resume_from_checkpoint: False # Load weights from a checkpoint before training
+
+wandb:
+  wandb_project: "your_wandb_project"
+  wandb_entity: "your_wandb_entity"
+
+  images_logging: "wandb" # local or wandb
+  # images_logging: "local" # local or wandb
+
+dataloader:
+  batch_size: 32 # 32 # batch size for train, test and val dataloaders, influences the number of batches per epoch, the 'train_log_every_n_steps' should be set accordingly
+  num_workers: 4 # number of workers for the dataloader, should be set to the number of CPUs on the machine
+
+products_plot: ["rgb_aviris", "mag1c", "label", "pred", "differences"]
+plot_samples: 8 # how many samples from the batch to select (note: should be less than the batch size)
+
+dataset:
+  input_products: [ "mag1c", "TOA_AVIRIS_640nm", "TOA_AVIRIS_550nm", "TOA_AVIRIS_460nm"] # mag1c + AVIRIS RGB
+  output_products: ["labelbinary"]
+  use_weight_loss: True
+  weight_loss: "weight_mag1c"
+  training_size: [128, 128]
+  training_size_overlap: [64, 64]
+  weight_sampling: True
+  root_folder: "/Permian/dataset" # Replace with your own!
+  train_csv: "train.csv" # train.csv for the full dataset path relative to root_folder
+
+model:
+  train: True # if in train model, we start from scratch, except for when we set 'resume_from_checkpoint'
+  test: True # if in test mode, we load model weights
+
+  model_mode: "segmentation_output" # regression_output
+  
+  model_type: "unet_semseg"
+  semseg_backbone: 'mobilenet_v2' # < used encoder model
+  # semseg_backbone: 'resnet34'
+  
+  num_classes: 1
+  optimizer: "adam"
+  lr: 0.0001
+  lr_decay: 0.5
+  lr_patience: 4
+
+  loss: 'BCEWithLogitsLoss'
+
+  # A weight of positive examples. Must be a vector with length equal to the number of classes.
+  # pos_weight > 1 increases the recall pos_weight < 1 increases the precision
+  pos_weight: 15
+  early_stopping_patience: 8
+
+
+training:
+  accelerator: gpu
+  devices: 1
+  max_epochs: 15 # number of epochs
+
+  # Pass a float in the range [0.0, 1.0] to check after a fraction of the training epoch. Pass an int to check after a fixed number of training batches. An int value can only be higher than the number of training batches when
+  val_check_interval: .5 # Run validation every XX steps or frac epochs
+  train_log_every_n_steps: 10 # trigger logging after every x batches - for small amount of training batches (caused by large batch size) set it smaller too
+
+hydra:
+  job:
+    chdir: True
+    config:
+      override_dirname:
+        exclude_keys:
+          - experiment_name
+  run:
+    dir: experiments/${experiment_name}/${now:%Y-%m-%d_%H-%M}
+  sweep:
+    dir: experiments
+    subdir:  ${hydra.job.override_dirname}/${now:%Y-%m-%d_%H-%M}
