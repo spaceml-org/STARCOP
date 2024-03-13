@@ -110,9 +110,9 @@ If you find the STARCOP models or dataset useful in your research, please consid
 	doi = {10.1038/s41598-023-44918-6},
 	number = {1},
 	journal = {Scientific Reports},
-	author = {Růžička, Vít and Mateo-Garcia, Gonzalo and Gómez-Chova, Luis and Vaughan, Anna, and Guanter, Luis and Markham, Andrew},
+        author={Růžička, Vít and Mateo-Garcia, Gonzalo and G{\'o}mez-Chova, Luis and Vaughan, Anna and Guanter, Luis and Markham, Andrew},
 	month = nov,
 	year = {2023},
-	pages = {19999},
+	pages = {19999}
 }
 ```
