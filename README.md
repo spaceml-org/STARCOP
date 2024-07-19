@@ -120,3 +120,6 @@ If you find the STARCOP models or dataset useful in your research, please consid
 	pages = {19999}
 }
 ```
+## Acknowledgments
+
+This research has been funded by ESA Cognitive Cloud Computing in Space initiative project number STARCOP I-2022-00380. It has been supported by the DEEPCLOUD project (PID2019-109026RB-I00) funded by the Spanish Ministry of Science and Innovation (MCIN/AEI/10.13039/501100011033) and the European Union (NextGenerationEU).
