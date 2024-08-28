@@ -42,7 +42,9 @@ Methane is the second most important greenhouse gas contributor to climate chang
 ### Dataset
 
 The full annotated dataset used for training and evaluation is <a href="https://doi.org/10.5281/zenodo.7863343">hosted on Zenodo</a>. For easier access to the data for the demos, a smaller subsets are also hosted on Google Drive: <a href="https://drive.google.com/uc?id=1TwtSVpbvGd-lWfIjQrw0i4LqkiX2EuHq">evaluation dataset</a> and <a href="https://drive.google.com/uc?id=1C4ZHvT1ZPKVMFGmqcV12Aozs8Uv_DIxD">subset of the training dataset, including only strong plumes</a>. 
-We provide selected AVIRIS hyperspectral bands, computed methane enhancement products and simulated multispectral views of the data from WorldView-3. For more details see the paper.
+We provide selected AVIRIS-NG hyperspectral bands, computed methane enhancement products and simulated multispectral views of the data from WorldView-3. For more details see the paper.
+
+**All bands:** If you'd like to use more AVIRIS-NG bands, please contact us for instructions on downloading the full data (a preview of the formatting in a mini dataset is also available <a href="https://huggingface.co/datasets/previtus/starcop_allbands_mini">here</a>).
 
 For dataset inspection use the prepared <a href="https://colab.research.google.com/github/spaceml-org/STARCOP/blob/master/notebooks/dataset_exploration.ipynb">Colab Dataset Exploration demo <img src="https://colab.research.google.com/assets/colab-badge.svg" height=16px></a>.
 
