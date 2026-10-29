@@ -50,6 +50,7 @@ For dataset inspection use the prepared <a href="https://colab.research.google.c
 
 
 ### Code examples
+<img width="1412" height="175" alt="Label for FDL Produts-01" src="https://github.com/user-attachments/assets/aff76eaa-e9d1-4c4b-9df3-0eac31c45981" />
 
 **Install**
 
